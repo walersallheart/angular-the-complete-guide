@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
 @Component({
   selector: 'app-new-account',
   templateUrl: './new-account.component.html',
@@ -13,6 +12,7 @@ export class NewAccountComponent {
       name: accountName,
       status: accountStatus
     });
-    console.log('A server status changed, new status: ' + accountStatus);
+
+    
   }
 }
