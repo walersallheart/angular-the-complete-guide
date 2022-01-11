@@ -8,7 +8,11 @@ import { LoggingService } from '../logging.service';
   //providers:[LoggingService]
 })
 export class NewAccountComponent {
-  constructor(private loggingService:LoggingService, private accountService:AccountService) {}
+  constructor(private loggingService:LoggingService, private accountService:AccountService) {
+    this.accountService.statusUpdated.subscribe((status:string) => {
+      alert('New Status: ' + status)
+    })
+  }
 
   onCreateAccount(accountName: string, accountStatus: string) {
     //loggingService is made automatically by Angular since its listed in the constructor arguments
