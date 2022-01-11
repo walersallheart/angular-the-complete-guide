@@ -5,7 +5,7 @@ import { LoggingService } from '../logging.service';
   selector: 'app-new-account',
   templateUrl: './new-account.component.html',
   styleUrls: ['./new-account.component.css'],
-  providers:[LoggingService]
+  //providers:[LoggingService]
 })
 export class NewAccountComponent {
   constructor(private loggingService:LoggingService, private accountService:AccountService) {}
@@ -15,6 +15,6 @@ export class NewAccountComponent {
     //and the class is provided under "providers".  If its not in the providers, it expects an instance of the
     //service from the parent component
     this.accountService.addAccount(accountName, accountStatus);
-    this.loggingService.logStatusChange(accountStatus);
+    //this.loggingService.logStatusChange(accountStatus);
   }
 }
