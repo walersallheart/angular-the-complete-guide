@@ -33,6 +33,9 @@ export class RecipeService{
         //we use slice to return a copy of the array instead of a reference, since its supposed to be private
         return this.recipes.slice();
     }
+    getRecipe(index:number):Recipe {
+        return this.recipes[index];
+    }
 
     addIngredientsToShoppingList(ingredients:Ingredient[]) {
         this.slService.addIngredients(ingredients);
