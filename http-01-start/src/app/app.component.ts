@@ -12,15 +12,12 @@ export class AppComponent implements OnInit {
   loadedPosts:Post[] = [];
   isFetching = false;
   url = 'https://angular-8a2b4-default-rtdb.firebaseio.com/posts.json';
+  error = null;
 
   constructor(private http: HttpClient, private postsService:PostsService) {}
 
   ngOnInit() {
-    this.isFetching = true;
-    this.postsService.fetchPosts().subscribe(posts => {
-      this.isFetching = false;
-      this.loadedPosts = posts;
-    });
+    this.onFetchPosts();
   }
 
   onCreatePost(postData: Post) {
@@ -32,6 +29,8 @@ export class AppComponent implements OnInit {
     this.postsService.fetchPosts().subscribe(posts => {
       this.isFetching = false;
       this.loadedPosts = posts;
+    }, error => {
+      this.error = error.message;
     });
   }
 
