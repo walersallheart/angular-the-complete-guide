@@ -29,10 +29,16 @@ export class RecipeService{
 
     constructor(private slService:ShoppingListService) {}
 
+    setRecipes(recipes:Recipe[]) {
+        this.recipes = recipes;
+        this.recipesChanged.next(this.recipes.slice());
+    }
+
     getRecipes() {
         //we use slice to return a copy of the array instead of a reference, since its supposed to be private
         return this.recipes.slice();
     }
+
     getRecipe(index:number):Recipe {
         return this.recipes[index];
     }
