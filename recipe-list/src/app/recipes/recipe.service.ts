@@ -8,24 +8,7 @@ import { Recipe } from "./recipe.model";
 export class RecipeService{
     recipesChanged = new Subject<Recipe[]>();
 
-    private recipes:Recipe[] = [
-        new Recipe(
-            'A Test Recipe!',
-            'This is simply a test','https://cdn.loveandlemons.com/wp-content/uploads/2020/03/pantry-recipes-2.jpg',
-            [
-                new Ingredient('Meat',1),
-                new Ingredient('French Fries',20)
-            ]
-        ),
-        new Recipe(
-            'Another Test Recipe',
-            'This is simply a test','https://cdn.loveandlemons.com/wp-content/uploads/2020/03/pantry-recipes-2.jpg',
-            [
-                new Ingredient('Buns',2),
-                new Ingredient('Meat',1)
-            ]
-        )
-    ];
+    private recipes:Recipe[] = [];
 
     constructor(private slService:ShoppingListService) {}
 
