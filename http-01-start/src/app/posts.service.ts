@@ -21,7 +21,10 @@ export class PostsService{
 
         this.http.post<{name:string}>(
             this.url,
-            postData
+            postData,
+            {
+                observe: 'body'
+            }
         ).subscribe(responseData => {
             //
         });
