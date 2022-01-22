@@ -12,7 +12,7 @@ interface AuthResponseData {
 @Injectable({providedIn: 'root'})
 
 export class AuthService {
-    apiKey = 'AIzaSyDiooHldQe9sWE645LBHrxrxnWLyt9_DjU';
+    private apiKey: string = 'AIzaSyDiooHldQe9sWE645LBHrxrxnWLyt9_DjU';
 
     constructor(private http:HttpClient) {}
 
