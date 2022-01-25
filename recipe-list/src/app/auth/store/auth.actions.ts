@@ -2,6 +2,7 @@ import { Action } from "@ngrx/store";
 
 //Prefixing your event type names is encouraged to ensure uniqueness
 //Action dispatches always hit ALL reducers, not jsut the one you're looking for
+export const LOGIN_START = '[Auth] LOGIN START';
 export const LOGIN = '[Auth] LOGIN';
 export const LOGOUT = '[Auth] LOGOUT';
 
