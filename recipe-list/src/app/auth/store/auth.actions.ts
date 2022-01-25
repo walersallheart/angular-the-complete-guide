@@ -5,7 +5,7 @@ export const LOGOUT = 'LOGOUT';
 
 export class Login implements Action {
     readonly type: string = LOGIN;
-    constructor(public payload: { email:string, userId:string, token:string, expirationData:Date }){}
+    constructor(public payload: { email:string, userId:string, token:string, expirationDate:Date }){}
 }
 
 export class Logout implements Action {
