@@ -36,7 +36,6 @@ export function shoppingListReducer(state:State = initialState, action:ShoppingL
                     ...state,
                     ingredients: [...state.ingredients, action.payload].flat(Infinity)
                 }
-                break;
         case ShoppingListActions.UPDATE_INGREDIENT :
                 const index = action.payload['index'];
                 const ingredient = state.ingredients[index];
@@ -52,7 +51,6 @@ export function shoppingListReducer(state:State = initialState, action:ShoppingL
                     ...state,
                     ingredients: updateIngredients
                 }
-                break;
         case ShoppingListActions.DELETE_INGREDIENT :
                 return {
                     ...state,
@@ -60,7 +58,18 @@ export function shoppingListReducer(state:State = initialState, action:ShoppingL
                         return index !== action.payload;
                     })
                 }
-                break;
+        case ShoppingListActions.START_EDIT :
+            return {
+                ...state,
+                editedIngredientIndex:action.payload,
+                editedIngredient: state.ingredients[action.payload]
+            }
+        case ShoppingListActions.STOP_EDIT :
+            return {
+                ...state,
+                editedIngredient:null,
+                editedIngredientIndex:-1
+            }
         default:
             return state;
     }
