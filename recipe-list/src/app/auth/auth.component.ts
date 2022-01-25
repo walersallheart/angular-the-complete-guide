@@ -6,6 +6,10 @@ import { AuthResponseData, AuthService } from "./auth.service";
 
 import { AlertComponent } from "../shared/alert/alert.component";
 import { PlaceholderDirective } from "../shared/placeholder/placeholder.directive";
+import { Store } from "@ngrx/store";
+
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 
 @Component({
     selector: 'app-auth',
@@ -20,7 +24,12 @@ export class AuthComponent implements OnDestroy {
 
     private closeSub!:Subscription;
 
-    constructor(private authService:AuthService, private router:Router, private componentFactoryResolver:ComponentFactoryResolver) {}
+    constructor(
+        private authService:AuthService,
+        private router:Router,
+        private componentFactoryResolver:ComponentFactoryResolver,
+        private store:Store<fromApp.AppState>
+    ) {}
 
     onSwitchMode(){
         this.isLoginMode = !this.isLoginMode;
@@ -39,7 +48,10 @@ export class AuthComponent implements OnDestroy {
         this.isLoading = true;
 
         if (this.isLoginMode) {
-            authObs = this.authService.login(email, password);
+            //authObs = this.authService.login(email, password);
+            this.store.dispatch(
+                new AuthActions.LoginStart({email: email, password:password})
+            );
         } else {
             authObs = this.authService.signup(email, password)
         }
