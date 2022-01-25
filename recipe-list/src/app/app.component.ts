@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { LoggingService } from './auth/logging.service';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +10,9 @@ export class AppComponent implements OnInit{
   title = 'recipe-list';
   loadedFeature = 'recipe';
 
-  constructor(private authService:AuthService, private loggingService:LoggingService){}
+  constructor(private authService:AuthService){}
 
   ngOnInit(): void {
     this.authService.autoLogin();
-    this.loggingService.printLog('hello from AppComponent ngOnInit');
   }
 }
