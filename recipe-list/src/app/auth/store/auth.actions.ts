@@ -16,6 +16,11 @@ export class Logout implements Action {
     public payload:any = null;
 }
 
+export class LoginStart implements Action {
+    readonly type = LOGIN_START;
+    constructor(public payload:{ email:string, password:string }){}
+}
+
 export type AuthActions =
     Login |
     Logout;
