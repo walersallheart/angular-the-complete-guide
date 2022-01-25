@@ -1,7 +1,9 @@
 import { Action } from "@ngrx/store";
 
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
+//Prefixing your event type names is encouraged to ensure uniqueness
+//Action dispatches always hit ALL reducers, not jsut the one you're looking for
+export const LOGIN = '[Auth] LOGIN';
+export const LOGOUT = '[Auth] LOGOUT';
 
 export class Login implements Action {
     readonly type: string = LOGIN;

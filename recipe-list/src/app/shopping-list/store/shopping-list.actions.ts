@@ -1,12 +1,14 @@
 import { Action } from "@ngrx/store";
 import { Ingredient } from "src/app/shared/ingredient.model";
 
-export const ADD_INGREDIENT = 'ADD_INGREDIENT';
-export const ADD_INGREDIENTS = 'ADD_INGREDIENTS';
-export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
-export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
-export const START_EDIT = 'START_EDIT';
-export const STOP_EDIT = 'STOP_EDIT';
+//Prefixing your event type names is encouraged to ensure uniqueness
+//Action dispatches always hit ALL reducers, not jsut the one you're looking for
+export const ADD_INGREDIENT = '[Shopping List] ADD_INGREDIENT';
+export const ADD_INGREDIENTS = '[Shopping List] ADD_INGREDIENTS';
+export const UPDATE_INGREDIENT = '[Shopping List] UPDATE_INGREDIENT';
+export const DELETE_INGREDIENT = '[Shopping List] DELETE_INGREDIENT';
+export const START_EDIT = '[Shopping List] START_EDIT';
+export const STOP_EDIT = '[Shopping List] STOP_EDIT';
 
 export class AddIngredient implements Action {
     readonly type: string = ADD_INGREDIENT;
