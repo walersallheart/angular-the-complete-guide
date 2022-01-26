@@ -30,32 +30,6 @@ export class AuthService {
                 private store:Store<fromApp.AppState>
             ) {}
 
-    signup(email:string, password:string) {
-        return this.http.post<AuthResponseData>(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + this.apiKey,
-            {
-                email:email,
-                password:password,
-                returnSecureToken:true
-            }
-        ).pipe(catchError(this.handleError), tap(resData => {
-            this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
-        }));
-    }
-
-    login(email:string, password:string) {
-        return this.http.post<AuthResponseData>(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + this.apiKey,
-            {
-                email:email,
-                password:password,
-                returnSecureToken:true
-            }
-        ).pipe(catchError(this.handleError), tap(resData => {
-            this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
-        }));
-    }
-
     autoLogin(){
         const userData: {
             email:string;
@@ -86,17 +60,12 @@ export class AuthService {
     }
 
     logout(){
-        localStorage.removeItem('userData')
         //this.user.next(null!);
-
         this.store.dispatch(new fromAuth.Logout());
-
-        this.router.navigate(['/auth']);
-
+        localStorage.removeItem('userData');
         if (this.tokenExpirationTimer){
             clearTimeout(this.tokenExpirationTimer);
         }
-
         this.tokenExpirationTimer = null;
     }
 

@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, ofType, Effect } from '@ngrx/effects'
@@ -111,8 +111,11 @@ export class AuthEffects{
     );
 
     @Effect({dispatch:false})
-    authSuccess = this.actions$.pipe(
-        ofType(AuthActions.AUTHENTICATE_SUCCESS),
+    authRedirect = this.actions$.pipe(
+        ofType(
+            AuthActions.AUTHENTICATE_SUCCESS,
+            AuthActions.LOGOUT
+        ),
         tap(() => {
             this.router.navigate(['/']);
         })
