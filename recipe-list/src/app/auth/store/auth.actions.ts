@@ -3,6 +3,7 @@ import { Action } from "@ngrx/store";
 //Prefixing your event type names is encouraged to ensure uniqueness
 //Action dispatches always hit ALL reducers, not jsut the one you're looking for
 export const LOGIN_START = '[Auth] LOGIN START';
+export const LOGIN_FAIL = '[Auth] LOGIN FAIL';
 export const LOGIN = '[Auth] LOGIN';
 export const LOGOUT = '[Auth] LOGOUT';
 
@@ -21,6 +22,13 @@ export class LoginStart implements Action {
     constructor(public payload:{ email:string, password:string }){}
 }
 
+export class LoginFail implements Action {
+    readonly type: string = LOGIN_FAIL;
+    constructor(public payload:string){}
+}
+
 export type AuthActions =
     Login |
-    Logout;
+    Logout |
+    LoginStart |
+    LoginFail;
