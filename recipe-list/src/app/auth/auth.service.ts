@@ -62,7 +62,7 @@ export class AuthService {
     logout(){
         //this.user.next(null!);
         this.store.dispatch(new fromAuth.Logout());
-        localStorage.removeItem('userData');
+
         if (this.tokenExpirationTimer){
             clearTimeout(this.tokenExpirationTimer);
         }

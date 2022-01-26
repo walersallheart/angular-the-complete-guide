@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, ofType, Effect } from '@ngrx/effects'
 import { of } from 'rxjs';
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
+import { User } from '../user.model';
 
 import * as AuthActions  from './auth.actions';
 
@@ -18,6 +19,11 @@ export interface AuthResponseData {
 
 const handleAuthentication = (expiresIn:number, email:string, userId:string, token:string) => {
     const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
+    const user = new User(email, userId, token, expirationDate);
+
+    console.log('handle authentication user->',user);
+
+    localStorage.setItem('userData', JSON.stringify(user));
 
     return new AuthActions.AuthenticateSuccess({
         email:email,
@@ -94,14 +100,7 @@ export class AuthEffects{
                 }
             ).pipe(
                 map(resData => {
-                    const expirationDate = new Date(new Date().getTime() + +resData.expiresIn * 1000);
-
-                    return new AuthActions.AuthenticateSuccess({
-                        email:resData.email,
-                        userId:resData.localId,
-                        token:resData.idToken,
-                        expirationDate:expirationDate
-                    })
+                    return handleAuthentication(+resData.expiresIn, resData.email, resData.localId, resData.idToken);
                 }),
                 catchError(errorRes => {
                     return handleError(errorRes);
@@ -120,4 +119,47 @@ export class AuthEffects{
             this.router.navigate(['/']);
         })
     );
+
+    @Effect()
+    autoLogin = this.actions$.pipe(
+        ofType(AuthActions.AUTO_LOGIN),
+        map(() =>{
+            const userData: {
+                email:string;
+                id:string;
+                _token:string;
+                _tokenExpirationDate:string;
+            } = JSON.parse(localStorage.getItem('userData')!);
+
+            if (!userData) {
+                return { type:'NOT_LOGGED_IN' };;
+            }
+
+            const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+            console.log('autoLogin userData->',userData);
+
+            if (loadedUser.token){
+                // const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+                // this.autoLogout(expirationDuration);
+
+                return new AuthActions.AuthenticateSuccess({
+                    email:loadedUser.email,
+                    userId:loadedUser.id,
+                    token: loadedUser.token,
+                    expirationDate:new Date(userData._tokenExpirationDate)
+                })
+
+            }
+
+            return { type:'NOT_LOGGED_IN' };
+        })
+    )
+
+    @Effect({ dispatch:false })
+    authLogout = this.actions$.pipe(
+        ofType(AuthActions.LOGOUT),
+        tap(() => {
+            localStorage.removeItem('userData');
+        })
+    )
 }
