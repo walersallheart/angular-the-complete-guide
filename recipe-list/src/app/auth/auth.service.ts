@@ -75,7 +75,7 @@ export class AuthService {
             this.autoLogout(expirationDuration);
             //this.user.next(loadedUser);
             this.store.dispatch(
-                new fromAuth.Login({
+                new fromAuth.AuthenticateSuccess({
                     email:loadedUser.email,
                     userId:loadedUser.id,
                     token: loadedUser.token,
@@ -118,7 +118,7 @@ export class AuthService {
         //this.user.next(user);
 
         this.store.dispatch(
-            new fromAuth.Login({
+            new fromAuth.AuthenticateSuccess({
                 email:email,
                 userId:userId,
                 token: token,
